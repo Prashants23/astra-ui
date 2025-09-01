@@ -5,9 +5,9 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { BLACK, CARD_BG, RING, CIRCLE } from '../utils/constance.utils';
-import { useHeartAnimations, useChipAnimations, useStarAnimations } from '../hooks/hooks';
-import { ANIMATION_CONFIG, IMAGE_SIZES, CHIP_CONFIG, ASSETS } from '../utils/constance.utils';
+import { BLACK, CARD_BG, RING, CIRCLE } from '../../utils/constance.utils';
+import { useHeartAnimations, useChipAnimations, useStarAnimations } from '../../hooks/hooks';
+import { ANIMATION_CONFIG, IMAGE_SIZES, CHIP_CONFIG, ASSETS } from '../../utils/constance.utils';
 
 interface SelectableItemProps {
   showChip?: boolean;
