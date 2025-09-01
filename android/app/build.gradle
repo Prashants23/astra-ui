@@ -92,21 +92,24 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        release {
-            storeFile file("your_key_name.keystore")
-            storePassword System.getenv("MYAPP_RELEASE_STORE_PASSWORD")
-            keyAlias "your-key-alias"
-            keyPassword System.getenv("MYAPP_RELEASE_KEY_PASSWORD")
-        }
+        // Uncomment and configure this when you need proper release signing for production:
+        // release {
+        //     storeFile file("release.keystore")
+        //     storePassword System.getenv("MYAPP_RELEASE_STORE_PASSWORD")
+        //     keyAlias "release"
+        //     keyPassword System.getenv("MYAPP_RELEASE_KEY_PASSWORD")
+        // }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+       release {
+            // Using debug signing for development - replace with proper release signing for production
+            signingConfig signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
+           
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
