@@ -1,118 +1,75 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet,} from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {  GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SelectableItem } from './src/components/SelectableItems';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+export default function App() {
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+  /** Array of items with selection state */
+  const [items, setItems] = useState(
+    Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      chipSelected: false, // Tracks if this item's chip is selected
+    }))
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  
+  /** References to each SelectableItem for imperative control */
+  const itemRefs = useRef<Array<{ deselectAll: () => void } | null>>([]);
+  
+  const setItemSelected = (index: number, isSelected: boolean) => {
+    setItems(prevItems => 
+      prevItems.map((prevItem, idx) => 
+        idx === index 
+          ? { ...prevItem, chipSelected: isSelected }
+          : prevItem
+      )
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <GestureHandlerRootView style={{ flex: 1 }}> 
+      <View style={styles.screen}>
+        <View style={styles.col}>
+          {items.map((item, index) => (
+            <SelectableItem
+              key={item.id}
+              showChip={item.chipSelected}
+              onChipPress={(isSelected) => {
+                // Update the specific item's chip selection state
+                setItemSelected(index, isSelected);
+              }}
+              chipText="Clients"
+              ref={el => itemRefs.current[index] = el}
+            />
+          ))}
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  /** Main app container */
+  screen: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  
+  col: {
+    width: '100%',
+    alignItems: 'center',
+    gap: 40, // Generous spacing between items
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  
+ 
 
-export default App;
+});
