@@ -73,9 +73,13 @@ export const ANIMATION_CONFIG = {
 
   // ASSET CONSTANTS
   export const ASSETS = {
-    HEART_EMPTY: require('../../assets/HeartEmpty.png'),
-    HEART_FILLED: require('../../assets/HeartFilled.png'),
-    STAR_EMPTY: require('../../assets/starEmpty.png'),
-    STAR_FILLED: require('../../assets/star.png'),
-    STAR_BUTTON: require('../../assets/starFilled.png'),
+    HEART_EMPTY: require('../assets/HeartEmpty.png'),
+    HEART_FILLED: require('../assets/HeartFilled.png'),
+    STAR_EMPTY: require('../assets/starEmpty.png'),
+    STAR_FILLED: require('../assets/star.png'),
+    STAR_BUTTON: require('../assets/starFilled.png'),
   } as const;
+
+
+
+

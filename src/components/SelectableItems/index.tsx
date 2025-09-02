@@ -186,7 +186,7 @@ const SelectableItemComponent = forwardRef<SelectableItemRef, SelectableItemProp
           <Animated.View style={[styles.chip, aChip]}>
             <TouchableOpacity onPress={onChipToggle}>
               <Image
-                source={isChipSelected ? ASSETS.STAR_FILLED : ASSETS.STAR_EMPTY}
+                source={isChipSelected ? ASSETS.STAR_BUTTON : ASSETS.STAR_EMPTY}
                 style={styles.chipStarImage}
               />
             </TouchableOpacity>
